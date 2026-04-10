@@ -119,3 +119,27 @@ if (tiltImage && window.innerWidth > 768) {
         tiltImage.style.transform = `rotateX(0deg) rotateY(0deg)`;
     });
 }
+
+// Image Modal Logic
+const modal = document.getElementById("image-modal");
+const thumb = document.getElementById("nav-profile-thumb");
+const modalImg = document.getElementById("modal-img");
+const closeModalBtn = document.querySelector(".close-modal");
+
+if (thumb && modal && modalImg) {
+    thumb.addEventListener("click", () => {
+        modal.classList.add("show");
+        modalImg.src = thumb.src;
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+        modal.classList.remove("show");
+    });
+
+    // Close on background click
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("show");
+        }
+    });
+}
