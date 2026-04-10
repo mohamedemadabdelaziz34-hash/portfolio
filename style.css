@@ -345,7 +345,7 @@ main {
 .hero-image {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     z-index: 2;
 }
@@ -764,5 +764,46 @@ footer {
         width: 250px;
         height: 250px;
         margin-bottom: 2rem;
+    }
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    left: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .whatsapp-float {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    color: #FFF;
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        left: 20px;
+        font-size: 28px;
     }
 }
