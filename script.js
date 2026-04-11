@@ -634,51 +634,89 @@ if (chatBubble && chatWindow && closeChat && langToggle) {
     });
 }
 
-// AI Insight Explorer Logic
-const insightBtns = document.querySelectorAll(".insight-btn");
-const insightDisplay = document.getElementById("dynamic-insight-text");
+// AI Neural Architect Logic
+const architectBtn = document.getElementById('architect-btn');
+const architectInput = document.getElementById('architect-input');
+const architectLoader = document.getElementById('architect-loader');
+const architectReport = document.getElementById('architect-report');
 
-const detailedInsights = {
-    objective: "Mohamed is targeting a career in AI Engineering with a focus on Deep Learning and Computer Vision. His current trajectory involves mastering neural architecture search and large-scale model optimization.",
-    specialties: "Core specialized nodes detected: [PyTorch Optimization], [Pathfinding Algorithms], [Medical Image Segmentation], and [Real-time Gesture Recognition]. Current compute focus: Efficiency & Scalability.",
-    philosophy: "Logic over Syntax. Mohamed believes in building systems that aren't just intelligent, but explainable. His coding philosophy emphasizes algorithmic elegance and robust data pipelines."
+const architectKnowledge = {
+    vision: {
+        keywords: ['see', 'detect', 'look', 'image', 'video', 'camera', 'face', 'object', 'scan', 'pathology', 'medical', 'eye'],
+        model: 'Convolutional Neural Networks (CNN) / Vision Transformer (ViT)',
+        tools: ['PyTorch', 'OpenCV', 'CUDA'],
+        project: 'AI Diagnostic System',
+        desc: 'Based on your request, I recommend a vision-based architecture using deep layer feature extraction.'
+    },
+    language: {
+        keywords: ['text', 'speak', 'write', 'language', 'translate', 'chat', 'sign', 'speech', 'voice'],
+        model: 'Long Short-Term Memory (LSTM) / Transformer / BERT',
+        tools: ['PyTorch', 'NLTK', 'MediaPipe'],
+        project: 'Ar-SLR: Arab Sign Language Recognizer',
+        desc: 'This project requires NLP/Sequence modeling to understand temporal dependencies in communication.'
+    },
+    robotics: {
+        keywords: ['move', 'robot', 'path', 'warehouse', 'warehouse', 'autonomous', 'navigation', 'agent'],
+        model: 'Reinforcement Learning (PPO/DQN) / A* Optimization',
+        tools: ['ROS2', 'TensorFlow', 'Python'],
+        project: 'Neural Pathfinding for Logistics',
+        desc: 'A multi-agent reinforcement learning approach would be optimal for dynamic pathfinding.'
+    },
+    general: {
+        model: 'Deep Neural Network (DNN)',
+        tools: ['Python', 'Scikit-learn', 'Pandas'],
+        project: 'Generic ML Framework',
+        desc: 'A robust data pipeline and custom feature engineering would be the starting point for this challenge.'
+    }
 };
 
-function typeInsight(text) {
-    if(!insightDisplay) return;
-    insightDisplay.innerHTML = "";
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < text.length) {
-            insightDisplay.innerHTML += text.charAt(i);
-            i++;
-        } else {
-            clearInterval(interval);
-        }
-    }, 20);
-}
+if (architectBtn && architectInput && architectLoader && architectReport) {
+    architectBtn.addEventListener('click', () => {
+        const input = architectInput.value.trim().toLowerCase();
+        if (!input) return;
 
-insightBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        // Remove active class from all
-        insightBtns.forEach(b => b.classList.remove("active"));
-        // Add to clicked
-        btn.classList.add("active");
-        
-        const type = btn.getAttribute("data-insight");
-        typeInsight(detailedInsights[type]);
+        // Reset and Show Loader
+        architectReport.innerHTML = '';
+        architectLoader.style.display = 'flex';
+        architectBtn.disabled = true;
+
+        setTimeout(() => {
+            architectLoader.style.display = 'none';
+            architectBtn.disabled = false;
+
+            // Simple Logic to determine category
+            let category = 'general';
+            for (let key in architectKnowledge) {
+                if (key === 'general') continue;
+                if (architectKnowledge[key].keywords.some(k => input.includes(k))) {
+                    category = key;
+                    break;
+                }
+            }
+
+            const data = architectKnowledge[category];
+            const tags = data.tools.map(t => `<span class="arch-tag">${t}</span>`).join('');
+
+            architectReport.innerHTML = `
+                <div class="report-section">
+                    <h4>Recommended Model</h4>
+                    <div class="report-content">${data.model}</div>
+                </div>
+                <div class="report-section">
+                    <h4>Proposed Tech Stack</h4>
+                    <div class="tag-cloud">${tags}</div>
+                </div>
+                <div class="report-section">
+                    <h4>Architect's Note</h4>
+                    <div class="report-content">${data.desc}</div>
+                </div>
+                <div class="relevant-project">
+                    <h5>Relevant Reference from My Portfolio:</h5>
+                    <p><strong>${data.project}</strong></p>
+                    <small>Check the Case Studies section for a deep dive into this logic.</small>
+                </div>
+            `;
+        }, 2500);
     });
-});
-
-// Auto-trigger first insight on scroll reveal
-const aiSection = document.getElementById("ai-insights");
-if (aiSection) {
-    const aiObserver = new IntersectionObserver((entries) => {
-        if(entries[0].isIntersecting) {
-            typeInsight(detailedInsights.objective);
-            aiObserver.disconnect();
-        }
-    }, { threshold: 0.5 });
-    aiObserver.observe(aiSection);
 }
 

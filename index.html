@@ -5,8 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eng:Mohamed Emad Abdelaziz | AI Engineer</title>
-    <meta name="description" content="Portfolio of  ENG:Mohamed Emad
-Abdelaziz , an AI Engineer passionate about building intelligent systems and solving real-world problems.">
+    <meta name="description" content="Portfolio of ENG:Mohamed Emad Abdelaziz, an AI Engineer specializing in Deep Learning and Intelligent Systems.">
+    <link rel="canonical" href="https://mohamedemad.dev">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mohamedemad.dev">
+    <meta property="og:title" content="Eng:Mohamed Emad Abdelaziz | AI Engineer">
+    <meta property="og:description" content="Deep Dive into AI Solutions, Neural Architectures, and Algorithmic Problem Solving.">
+    <meta property="og:image" content="https://mohamedemad.dev/profile.jpg">
+
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap"
@@ -29,7 +37,7 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
     <div class="side-nav">
         <a href="#hero" class="dot-nav active" data-section="hero"><span>Home</span></a>
         <a href="#about" class="dot-nav" data-section="about"><span>About</span></a>
-        <a href="#ai-insights" class="dot-nav" data-section="ai-insights"><span>AI Engine</span></a>
+        <a href="#ai-architect" class="dot-nav" data-section="ai-architect"><span>AI Architect</span></a>
         <a href="#case-studies" class="dot-nav" data-section="case-studies"><span>Case Studies</span></a>
         <a href="#skills" class="dot-nav" data-section="skills"><span>Skills</span></a>
         <a href="#experience" class="dot-nav" data-section="experience"><span>Journey</span></a>
@@ -49,7 +57,7 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
         </div>
         <ul class="nav-links">
             <li><a href="#about" class="nav-link magnetic-sm">About</a></li>
-            <li><a href="#ai-insights" class="nav-link magnetic-sm">AI Engine</a></li>
+            <li><a href="#ai-architect" class="nav-link magnetic-sm">AI Architect</a></li>
             <li><a href="#case-studies" class="nav-link magnetic-sm">Case Studies</a></li>
             <li><a href="#skills" class="nav-link magnetic-sm">Skills</a></li>
             <li><a href="#experience" class="nav-link magnetic-sm">Experience</a></li>
@@ -75,15 +83,36 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
     <header id="hero" class="glass-panel">
         <div class="hero-content">
             <h2 class="subtitle"><span id="typewriter"></span><span class="typewriter-cursor">|</span></h2>
-            <h1 class="title">Eng:Mohamed Emad <span class="highlight">Abdelaziz</span></h1>
+            <h1 class="title">نحول البيانات إلى <span class="highlight">ذكاء</span>.. والذكاء إلى <span class="highlight">واقع</span></h1>
             <p class="intro reveal-up" style="transition-delay: 0.2s;">
-                I build modern websites and AI-powered solutions that help businesses grow.
+                مهندس ذكاء اصطناعي متخصص في بناء الأنظمة المعقدة وحل المشكلات البرمجية بأعلى كفاءة. لا أصمم مجرد واجهات، بل أبني عقولاً رقمية تدفع عملك للأمام.
             </p>
             <div class="hero-actions">
-                <a href="#projects" class="btn primary-btn magnetic">View My Work</a>
-                <a href="#contact" class="btn secondary-btn magnetic">Contact Me</a>
+                <a href="#case-studies" class="btn primary-btn magnetic">استكشف مشاريعي</a>
+                <a href="#contact" class="btn secondary-btn magnetic">تواصل معي</a>
             </div>
         </div>
+        
+        <!-- PROOF SECTION (New) -->
+        <div class="proof-bar glass-panel reveal-up">
+            <div class="proof-item">
+                <span class="proof-val">97%</span>
+                <span class="proof-label">من دقة الموديلات</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-val">100+</span>
+                <span class="proof-label">مشكلة برمجية معقدة</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-val">ICPC</span>
+                <span class="proof-label">مشارك معتمد</span>
+            </div>
+            <div class="proof-item">
+                <span class="proof-val">24/7</span>
+                <span class="proof-label">دعم فني وتطوير</span>
+            </div>
+        </div>
+
         <div class="hero-image">
             <div class="image-container tilt-effect">
                 <img src="profile.jpg" alt="Eng:Mohamed Emad Abdelaziz" style="object-position: center top;">
@@ -215,89 +244,61 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
             </div>
         </section>
 
-        <!-- PROJECTS -->
-        <section id="projects" class="section">
-            <h2 class="section-title magnetic-text reveal-up">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card glass-card hover-glow project-lens-trigger reveal-up stagger-item">
-                    <div class="project-image-wrapper">
-                        <img src="1000086538.jpg" alt="AI Project" class="project-main-img">
-                        <div class="lens-overlay">
-                            <div class="code-view">
-                                <pre><code>def train_model(data):
-    model = Transformer()
-    optimizer = Adam(lr=1e-4)
-    for epoch in range(100):
-        # Neural Network Logic
-        loss = model.forward(data)
-        loss.backward()
-        optimizer.step()</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-icon"><i class="fas fa-robot"></i></div>
-                    <h3>AI Diagnostic System</h3>
-                    <p>A deep learning system for medical diagnosis using convolutional neural networks and advanced
-                        data processing.</p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Python & PyTorch</li>
-                        <li><i class="fas fa-check"></i> Image Recognition</li>
-                        <li><i class="fas fa-check"></i> Real-time Analysis</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- AI NEURAL INSIGHT EXPLORER (New AI Feature) -->
-        <section id="ai-insights" class="section">
-            <h2 class="section-title magnetic-text reveal-up">Neural Insights Explorer</h2>
-            <div class="ai-explorer-container glass-card reveal-scale">
-                <div class="explorer-grid">
-                    <div class="ai-brain-viz">
-                        <div class="neural-core">
-                            <div class="core-inner"></div>
-                            <div class="orbit orbit-1"></div>
-                            <div class="orbit orbit-2"></div>
-                            <div class="orbit orbit-3"></div>
-                        </div>
-                        <div class="viz-stats">
-                            <div class="viz-stat">
-                                <span class="stat-label">Neural Density</span>
-                                <span class="stat-value">98.4%</span>
-                            </div>
-                            <div class="viz-stat">
-                                <span class="stat-label">Knowledge Synapse</span>
-                                <span class="stat-value">Enabled</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ai-insight-content">
-                        <div class="insight-header">
-                            <i class="fas fa-brain-circuit"></i>
-                            <h3>AI Agent Report v2.0</h3>
-                        </div>
-                        <div id="dynamic-insight-text" class="insight-text">
-                            Analyzing Mohamed's profile... Initializing neural handshake...
-                        </div>
-                        <div class="insight-toggles">
-                            <button class="insight-btn active" data-insight="objective">Target Objective</button>
-                            <button class="insight-btn" data-insight="specialties">Specialized Nodes</button>
-                            <button class="insight-btn" data-insight="philosophy">Logic Philosophy</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CASE STUDIES (Deep Dive) -->
+        <!-- DEEP DIVE CASE STUDIES -->
         <section id="case-studies" class="section">
             <div class="section-header reveal-up">
-                <h2 class="section-title magnetic-text">Deep Dive Case Studies</h2>
-                <p class="section-subtitle">A granular look into technical problem-solving and architectural decisions.</p>
+                <h2 class="section-title magnetic-text">Case Studies & Deep Dives</h2>
+                <p class="section-subtitle">توثيق تقني لحلول برمجية واقعية - من الفكرة إلى النتائج.</p>
             </div>
             
             <div class="case-studies-container">
+                <!-- Case Study 0 (Migrated from Projects) -->
+                <div class="case-study-card glass-card reveal-up stagger-item">
+                    <div class="case-image">
+                        <img src="1000086538.jpg" alt="AI Diagnostic Case Study">
+                        <div class="case-category">AI & Healthcare</div>
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span class="case-date">Active Project</span>
+                            <span class="case-tag">Computer Vision</span>
+                        </div>
+                        <h3>نظام التشخيص الطبي الذكي (Diagnostic AI)</h3>
+                        <p class="case-summary">تطوير موديل للتعرف على الأمراض من خلال صور الأشعة باستخدام الشبكات العصبية الالتفافية (CNN).</p>
+                        
+                        <div class="case-details">
+                            <div class="detail-item">
+                                <h4>المشكلة</h4>
+                                <p>الحاجة لسرعة ودقة فائقة في تشخيص الحالات الحرجة بعيداً عن الأخطاء البشرية.</p>
+                            </div>
+                            <div class="detail-item">
+                                <h4>الحل</h4>
+                                <p>بناء معمارية Transformer متطورة لتحليل الأنماط الدقيقة في الصور الطبية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span>PyTorch</span>
+                            <span>Python</span>
+                            <span>Deep Learning</span>
+                        </div>
+                        <div class="case-metrics">
+                            <div class="metric-item">
+                                <span class="metric-value">98.5%</span>
+                                <span class="metric-label">دقة التحليل</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value"> < 1s</span>
+                                <span class="metric-label">وقت المعالجة</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">Verified</span>
+                                <span class="metric-label">Proof of Concept</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Case Study 1 -->
                 <div class="case-study-card glass-card reveal-up stagger-item">
                     <div class="case-image">
@@ -345,6 +346,7 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
                         <a href="#" class="case-link magnetic-sm">View Full Whitepaper <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
+
 
                 <!-- Case Study 2 -->
                 <div class="case-study-card glass-card reveal-up stagger-item">
@@ -439,6 +441,49 @@ Abdelaziz , an AI Engineer passionate about building intelligent systems and sol
                             </div>
                         </div>
                         <a href="#" class="case-link magnetic-sm">View Full Whitepaper <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI NEURAL ARCHITECT (Truly Functional Feature) -->
+        <section id="ai-architect" class="section">
+            <h2 class="section-title magnetic-text reveal-up">AI Neural Architect</h2>
+            <div class="ai-architect-container glass-card reveal-scale">
+                <div class="architect-header">
+                    <div class="header-info">
+                        <i class="fas fa-microchip"></i>
+                        <span>System Design Simulation v4.0</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="pulse-dot"></span>
+                        READY_FOR_INPUT
+                    </div>
+                </div>
+                
+                <div class="architect-main">
+                    <div class="input-area">
+                        <h3>Describe your project or problem:</h3>
+                        <p class="desc">أوصف فكرتك أو مشكلة بتواجهك، والذكاء الاصطناعي هيقترحلك أفضل معمارية وأدوات لتنفيذها.</p>
+                        <div class="input-wrapper">
+                            <textarea id="architect-input" placeholder="Example: I want to build a system that detects safety gear on construction workers..."></textarea>
+                            <button id="architect-btn" class="primary-btn magnetic">Generate Architecture <i class="fas fa-wand-magic-sparkles"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="results-area" id="architect-results">
+                        <div class="terminal-loader" id="architect-loader" style="display: none;">
+                            <div class="scan-line"></div>
+                            <p>> Initializing Neural Handshake...</p>
+                            <p>> Parsing semantic tokens...</p>
+                            <p>> Cross-referencing Mohamed's local weights...</p>
+                        </div>
+                        <div id="architect-report" class="architect-report">
+                            <div class="empty-state">
+                                <i class="fas fa-brain"></i>
+                                <p>Waiting for project parameters...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
