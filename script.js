@@ -62,24 +62,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Scroll Reveal Animation
-const revealElements = document.querySelectorAll('.reveal');
-
-const revealOnScroll = () => {
-    const windowHeight = window.innerHeight;
-    const revealPoint = 150;
-
-    revealElements.forEach(el => {
-        const revealTop = el.getBoundingClientRect().top;
-        if (revealTop < windowHeight - revealPoint) {
-            el.classList.add('active');
-        }
-    });
+// Intersection Observer for Reveal Animations
+const observerOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
 };
 
-window.addEventListener('scroll', revealOnScroll);
-// Trigger once on load
-revealOnScroll();
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+            // Once revealed, we can stop observing it
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Target all reveal classes
+const revealTargets = document.querySelectorAll('.reveal-up, .reveal-scale, .reveal-right, .reveal-left');
+revealTargets.forEach(target => revealObserver.observe(target));
 
 // Active Navigation Link Update
 const sections = document.querySelectorAll('section');
@@ -415,3 +416,269 @@ function typeTop() {
 
 // Start top typewriter
 typeTop();
+
+// Initialize Vanilla Tilt for cards
+if (typeof VanillaTilt !== 'undefined') {
+    VanillaTilt.init(document.querySelectorAll(".glass-card, .project-card, .stat-card"), {
+        max: 8,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+        perspective: 1200,
+        scale: 1.02
+    });
+}
+
+// Social Buttons Hover Enhancement
+const socialBtns = document.querySelectorAll('.social-btn');
+socialBtns.forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        btn.style.boxShadow = `0 0 25px var(--primary-glow)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.style.boxShadow = 'none';
+    });
+});
+
+// AI Chatbot Logic
+const chatBubble = document.getElementById('ai-chat-bubble');
+const chatWindow = document.getElementById('ai-chat-window');
+const closeChat = document.getElementById('close-chat');
+const langToggle = document.getElementById('chat-lang-toggle');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
+const chatMessages = document.getElementById('chat-messages');
+const chatSuggestions = document.getElementById('chat-suggestions');
+
+let currentLang = 'EN';
+
+const translations = {
+    EN: {
+        welcome: "Hello! I'm Mohamed's Neural Assistant. I've indexed his entire portfolio. Ask me anything!",
+        placeholder: "Ask about skills, projects, or just say hi...",
+        thinking: "Analyzing neural nodes...",
+        suggestions: ["Explain Skills", "Show Projects", "Who is Mohamed?", "Contact Info"],
+        noMatch: "I couldn't find a direct match in my local nodes, but Mohamed likely handles that! Want to see his contact info?",
+        responses: {
+            "skills": "Mohamed's core stack includes Python, C++, and PyTorch. He's specialized in Deep Learning, Computer Vision, and Algorithmic Problem Solving.",
+            "projects": "He has worked on an AI Diagnostic System (97.2% accuracy), Autonomous Pathfinding for Logistics, and Arabic Sign Language Recognition (Ar-SLR).",
+            "contact": "You can reach Mohamed at mohamedemadabdelaziz34@gmail.com or call +20 1203080495. Check the footer for social links!",
+            "who": "Mohamed Emad is an AI Engineering student at Zagazig National University, an ICPC participant, and a passionate problem solver.",
+            "hello": "Greetings! I am ready to process your query about Mohamed's professional background.",
+            "hi": "Hello! How can I assist your exploration of this portfolio today?",
+            "thanks": "You're welcome! I'm here to help. Anything else?",
+            "price": "For project collaborations and pricing, please contact Mohamed directly through the 'Let's Connect' section.",
+            "education": "He is pursuing a Bachelor of Computers and Information at Zagazig National University, specializing in AI (Expected 2026).",
+            "hobby": "Besides AI, Mohamed is a competitive programmer and an enthusiast of algorithmic challenges.",
+            "experience": "He has a strong background in self-learning AI technologies and has participated in ICPC, showcasing his problem-solving skills.",
+            "services": "Mohamed offers Portfolio Creation, Landing Page Design, and AI/ML Solution Development.",
+            "time": () => `My system clock says it is currently ${new Date().toLocaleTimeString()}.`,
+            "name": "His name is Eng: Mohamed Emad Abdelaziz.",
+            "default": "That's an interesting inquiry! While I focus on Mohamed's portfolio, he can definitely discuss that with you. Shall I show you his contact info?"
+        }
+    },
+    AR: {
+        welcome: "أهلاً بك! أنا المساعد العصبي لمحمد. لقد قمت بفحص ملفه الشخصي بالكامل. اسألني أي شيء!",
+        placeholder: "اسأل عن المهارات، المشاريع، أو فقط قل مرحباً...",
+        thinking: "جاري تحليل البيانات...",
+        suggestions: ["شرح المهارات", "عرض المشاريع", "من هو محمد؟", "معلومات التواصل"],
+        noMatch: "لم أجد إجابة مباشرة في بياناتي المحلية، ولكن من المؤكد أن محمد يمكنه مساعدتك! هل تريد رؤية معلومات التواصل؟",
+        responses: {
+            "مهارات": "مهارات محمد الأساسية تشمل Python و C++ و PyTorch. هو متخصص في التعلم العميق، الرؤية الحاسوبية، وحل المشكلات البرمجية.",
+            "مشاريع": "من أبرز مشاريعه: نظام التشخيص الطبي بالذكاء الاصطناعي، نظام الملاحة الذكي للمستودعات، ومترجم لغة الإشارة العربية (Ar-SLR).",
+            "تواصل": "يمكنك التواصل مع محمد عبر البريد: mohamedemadabdelaziz34@gmail.com أو الهاتف: 01203080495.",
+            "من": "محمد عماد طالب هندسة ذكاء اصطناعي بجامعة الزقازيق الأهلية، مشارك في مسابقة ICPC، وشغوف بحل المشكلات المعقدة.",
+            "أهلا": "أهلاً بك! أنا جاهز للرد على استفساراتك حول مسيرة محمد المهنية.",
+            "مرحبا": "مرحباً! كيف يمكنني مساعدتك في استكشاف هذا الملف الشخصي اليوم؟",
+            "شكرا": "عفواً! أنا هنا للمساعدة. هل هناك شيء آخر؟",
+            "سعر": "بخصوص التعاون في المشاريع والأسعار، يرجى التواصل مع محمد مباشرة من خلال قسم 'التواصل'.",
+            "تعليم": "يدرس محمد في جامعة الزقازيق الأهلية، كلية الحاسبات والمعلومات، تخصص ذكاء اصطناعي (تخرج متوقع 2026).",
+            "هواية": "بالإضافة للذكاء الاصطناعي، محمد مبرمج تنافسي ويحب التحديات الخوارزمية.",
+            "خبرة": "يمتلك خبرة قوية في التعلم الذاتي لتقنيات الذكاء الاصطناعي وشارك في ICPC، مما يظهر مهاراته في حل المشكلات.",
+            "خدمات": "يقدم محمد خدمات: إنشاء المواقع التعريفية، تصميم صفحات الهبوط، وتطوير حلول الذكاء الاصطناعي.",
+            "وقت": () => `الساعة الآن بتوقيتي هي ${new Date().toLocaleTimeString('ar-EG')}.`,
+            "اسم": "اسمه المهندس محمد عماد عبد العزيز.",
+            "افتراضي": "هذا استفسار مثير للاهتمام! سيسعد محمد بمناقشة ذلك معك. هل أعرض لك معلومات التواصل الخاصة به؟"
+        }
+    }
+};
+
+function addMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', sender);
+    if (sender === 'bot') {
+        const icon = document.createElement('i');
+        icon.classList.add('fas', 'fa-robot', 'bot-msg-icon');
+        msgDiv.appendChild(icon);
+        const textSpan = document.createElement('span');
+        msgDiv.appendChild(textSpan);
+        chatMessages.appendChild(msgDiv);
+        
+        // Typewriter effect for bot response
+        let i = 0;
+        const speed = 20;
+        function type() {
+            if (i < text.length) {
+                textSpan.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        type();
+    } else {
+        msgDiv.textContent = text;
+        chatMessages.appendChild(msgDiv);
+    }
+    
+    if (currentLang === 'AR') msgDiv.classList.add('rtl-msg');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTyping() {
+    const typing = document.createElement('div');
+    typing.classList.add('typing-indicator', 'message');
+    typing.id = 'typing-indicator';
+    typing.innerHTML = `<span></span><span></span><span></span> <small style="margin-left:8px; opacity:0.7">${translations[currentLang].thinking}</small>`;
+    typing.style.display = 'flex';
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTyping() {
+    const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+}
+
+function updateSuggestions() {
+    chatSuggestions.innerHTML = '';
+    translations[currentLang].suggestions.forEach(suggest => {
+        const chip = document.createElement('div');
+        chip.classList.add('suggestion-chip');
+        chip.textContent = suggest;
+        chip.addEventListener('click', () => {
+            handleBotInteraction(suggest);
+        });
+        chatSuggestions.appendChild(chip);
+    });
+}
+
+function getBotResponse(input) {
+    const lowerInput = input.toLowerCase();
+    const res = translations[currentLang].responses;
+    
+    // Check for specific matches first
+    for (let key in res) {
+        if (lowerInput.includes(key.toLowerCase())) {
+            const response = res[key];
+            return typeof response === 'function' ? response() : response;
+        }
+    }
+
+    // Site Search Fallback: Try to find context in the webpage
+    const pageText = document.body.innerText.toLowerCase();
+    const words = lowerInput.split(' ').filter(w => w.length > 3);
+    for(let word of words) {
+        if(pageText.includes(word)) {
+            return currentLang === 'EN' ? 
+                `I found some information related to '${word}' in the portfolio. You might want to check the corresponding section!` :
+                `لقد وجدت بعض المعلومات المتعلقة بـ '${word}' في ملف التعريف. قد ترغب في مراجعة القسم المخصص لذلك!`;
+        }
+    }
+
+    return res["default"];
+}
+
+const handleBotInteraction = (text) => {
+    const msg = text || chatInput.value.trim();
+    if (msg) {
+        if (!text) chatInput.value = '';
+        addMessage(msg, 'user');
+        
+        showTyping();
+        
+        // Dynamic response time for "Thinking" feel
+        const delay = Math.random() * 800 + 1000;
+        
+        setTimeout(() => {
+            removeTyping();
+            const response = getBotResponse(msg);
+            addMessage(response, 'bot');
+        }, delay);
+    }
+};
+
+if (chatBubble && chatWindow && closeChat && langToggle) {
+    updateSuggestions();
+
+    chatBubble.addEventListener('click', () => {
+        chatWindow.classList.add('active');
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatWindow.classList.remove('active');
+    });
+
+    langToggle.addEventListener('click', () => {
+        currentLang = currentLang === 'EN' ? 'AR' : 'EN';
+        langToggle.textContent = currentLang;
+        chatInput.placeholder = translations[currentLang].placeholder;
+        chatMessages.innerHTML = '';
+        addMessage(translations[currentLang].welcome, 'bot');
+        updateSuggestions();
+    });
+
+    chatSend.addEventListener('click', () => handleBotInteraction());
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleBotInteraction();
+    });
+}
+
+// AI Insight Explorer Logic
+const insightBtns = document.querySelectorAll(".insight-btn");
+const insightDisplay = document.getElementById("dynamic-insight-text");
+
+const detailedInsights = {
+    objective: "Mohamed is targeting a career in AI Engineering with a focus on Deep Learning and Computer Vision. His current trajectory involves mastering neural architecture search and large-scale model optimization.",
+    specialties: "Core specialized nodes detected: [PyTorch Optimization], [Pathfinding Algorithms], [Medical Image Segmentation], and [Real-time Gesture Recognition]. Current compute focus: Efficiency & Scalability.",
+    philosophy: "Logic over Syntax. Mohamed believes in building systems that aren't just intelligent, but explainable. His coding philosophy emphasizes algorithmic elegance and robust data pipelines."
+};
+
+function typeInsight(text) {
+    if(!insightDisplay) return;
+    insightDisplay.innerHTML = "";
+    let i = 0;
+    const interval = setInterval(() => {
+        if (i < text.length) {
+            insightDisplay.innerHTML += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 20);
+}
+
+insightBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        // Remove active class from all
+        insightBtns.forEach(b => b.classList.remove("active"));
+        // Add to clicked
+        btn.classList.add("active");
+        
+        const type = btn.getAttribute("data-insight");
+        typeInsight(detailedInsights[type]);
+    });
+});
+
+// Auto-trigger first insight on scroll reveal
+const aiSection = document.getElementById("ai-insights");
+if (aiSection) {
+    const aiObserver = new IntersectionObserver((entries) => {
+        if(entries[0].isIntersecting) {
+            typeInsight(detailedInsights.objective);
+            aiObserver.disconnect();
+        }
+    }, { threshold: 0.5 });
+    aiObserver.observe(aiSection);
+}
+
